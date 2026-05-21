@@ -1,0 +1,15 @@
+{
+  "name": "harness-proj-init",
+  "version": "1.0.0",
+  "description": "Use when setting up a new project with the personal harness system for the first time. Run once per project. Reads the codebase, creates an Obsidian knowledge base with map files, asks targeted product questions, generates rules.md, and appends harness workflow instructions to AGENTS.md and CLAUDE.md.",
+  "entryPoint": "SKILL.md",
+  "triggers": [
+    "harness-proj-init",
+    "initialize harness",
+    "setup harness",
+    "new project harness",
+    "init obsidian harness",
+    "create knowledge base",
+    "setup agent memory"
+  ]
+}

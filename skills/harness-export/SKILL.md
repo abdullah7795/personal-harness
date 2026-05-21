@@ -1,0 +1,235 @@
+---
+name: harness-export
+description: Use after a task is complete to generate a single PR-ready TASK-REPORT.md combining the Sprint Contract, decisions made, verification proof, evaluator scores, and clean state check results. This file can be pasted directly into a pull request description, shared with reviewers, or archived as a permanent record. Turns AI work into shareable, auditable artifacts. Invoke with /harness-export.
+---
+
+# harness-export
+
+Generate a PR-ready report from any completed session. **This is what makes AI work shareable, auditable, and reviewable.**
+
+Every other AI dev tool produces code with no audit trail. This skill produces a complete record showing: what was asked, what was decided, what was rejected, what was verified, and how well it scored — all in one Markdown file ready to paste into a PR.
+
+---
+
+## When to Run
+
+- **After completing a task** — produce PR-ready documentation
+- **For code review** — give reviewers full context: decisions, alternatives, verification evidence
+- **For audit/compliance** — permanent record of what AI did and why
+- **For learning** — share a successful session's full reasoning with your team
+
+---
+
+## Step 1 — Identify the session to export
+
+- Read `.harness-state` from `~/Documents/Obsidian/creator/agent-memory/<PROJECT_NAME>/.harness-state`
+- Ask: *"Export the active session, or pick a different one?"*
+- If different: list all sessions, user picks
+
+---
+
+## Step 2 — Read all session files
+
+In parallel, read from `<session_path>/`:
+- `sprint-contract.md`
+- `progress.md`
+- `decisions.md`
+- `verification-notes.md`
+- `checkpoints.md`
+- `bootstrap-contract.md`
+- `evaluations/*-eval.md` (all evaluator reports)
+
+---
+
+## Step 3 — Generate the report
+
+Write to `<session_path>/TASK-REPORT.md`:
+
+```markdown
+# Task Report — <task title>
+Session: <SESSION_NAME>
+Date: <start date> → <completion date>
+Project: <PROJECT_NAME>
+
+---
+
+## TL;DR
+
+- **Task:** <one sentence summary>
+- **Result:** <N> features delivered, all verified
+- **Evaluator average:** <X>/5 across <M> sub-tasks
+- **All 3 verification layers:** ✓ Pass
+- **Five-dimension clean state:** ✓ Pass
+- **Files changed:** <N> files (<list top 5>)
+
+---
+
+## 1. What Was Built
+
+<scope from sprint-contract.md>
+
+### Features Delivered
+| Feature | Description | Verification |
+|---------|-------------|-------------|
+| F01 | <description> | `<command>` → Pass |
+| F02 | <description> | `<command>` → Pass |
+
+---
+
+## 2. Definition of Done — All Criteria Met
+
+<DoD checklist from sprint-contract.md with all boxes checked>
+
+---
+
+## 3. Key Decisions
+
+### Decisions Taken
+<decisions table from decisions.md with full reasoning>
+
+### Notable Alternatives Rejected
+<decisions-rejected table — shows what was considered>
+
+---
+
+## 4. Verification Evidence
+
+### Layer 1: Syntax / Static Analysis
+| Check | Command | Result |
+|-------|---------|--------|
+| Lint | `<command>` | ✓ Pass |
+| Type-check | `<command>` | ✓ Pass |
+| Build | `<command>` | ✓ Pass |
+
+### Layer 2: Runtime / Tests
+<test results from verification-notes.md>
+
+### Layer 3: End-to-End
+<E2E results per feature>
+
+### Five-Dimension Clean State (from Phase 4)
+1. ✓ Build passes
+2. ✓ All tests pass (<N>/<N>)
+3. ✓ No debug artifacts (console.log, debugger, TODO, FIXME)
+4. ✓ Lint passes
+5. ✓ Standard startup works
+
+---
+
+## 5. Evaluator Reports
+
+### Summary
+| Sub-task | Title | Worker | Evaluator Score | All 3 Layers |
+|----------|-------|--------|-----------------|--------------|
+| F01-01 | <title> | <agent> | <N>/5 | ✓ |
+
+### Average Scores by Dimension
+| Dimension | Average |
+|-----------|---------|
+| Correctness | <N>/5 |
+| Architecture | <N>/5 |
+| Test coverage | <N>/5 |
+| Conventions | <N>/5 |
+| Security | <N>/5 |
+| Error handling | <N>/5 |
+
+### Notable Evaluator Findings
+<list all "important" and "minor" issues found and how they were addressed>
+
+---
+
+## 6. Files Changed
+
+| File | Change Type | Sub-tasks That Touched It |
+|------|-------------|---------------------------|
+| <path> | added/modified/deleted | F01-02, F01-05 |
+
+---
+
+## 7. Hard Constraints — All Respected
+
+<list from sprint-contract.md with verification>
+
+---
+
+## 8. Out of Scope (NOT built — for next sprint)
+
+<exclusions from sprint-contract.md>
+
+---
+
+## 9. Timeline & Checkpoints
+
+| # | Checkpoint | Date | What Was Done |
+|---|-----------|------|--------------|
+| 0 | Task breakdown | <date> | <N> sub-tasks planned |
+| 1 | F01-01 complete | <date> | <brief> |
+
+---
+
+## 10. Reviewer Notes
+
+**Reviewing this PR:**
+- All features have machine-executable verification commands above
+- Run them locally to reproduce verification
+- Decisions section explains every non-trivial choice + alternatives considered
+- Evaluator agent scored work independently — see Section 5
+
+**Questions?**
+- See `decisions.md` in Obsidian for full reasoning on any choice
+- See `evaluations/<sub-task-id>-eval.md` for detailed scoring per sub-task
+
+---
+
+*Report generated by /harness-export from Obsidian session `<SESSION_NAME>`.*
+*Source files: `~/Documents/Obsidian/creator/agent-memory/<PROJECT_NAME>/sessions/<SESSION_NAME>-<date>/`*
+```
+
+---
+
+## Step 4 — Also copy to clipboard-friendly location
+
+Optionally copy the report to the project root as `TASK-REPORT.md` (or append to an existing one):
+
+Ask user: *"Also write TASK-REPORT.md to the project root so it can be committed and used as PR description?"*
+
+If yes:
+```bash
+cp <session_path>/TASK-REPORT.md ./TASK-REPORT.md
+```
+
+---
+
+## Step 5 — Print summary
+
+```
+✓ Task report exported
+  ~/Documents/Obsidian/creator/agent-memory/<PROJECT_NAME>/sessions/<SESSION_NAME>-<date>/TASK-REPORT.md
+  ./TASK-REPORT.md (in project root)
+
+To create a PR with this report:
+  gh pr create --title "<task>" --body-file TASK-REPORT.md
+
+Sections in report:
+  ✓ TL;DR with evaluator score
+  ✓ Features delivered with verification
+  ✓ Decisions made (with rejected alternatives)
+  ✓ Verification evidence (all 3 layers)
+  ✓ Evaluator scores by dimension
+  ✓ Files changed
+  ✓ Reviewer notes
+```
+
+---
+
+## Why This Matters
+
+Other AI tools: code appears, no audit trail.
+
+This skill: every AI session becomes a permanent, shareable, auditable artifact showing:
+- What was asked
+- What was decided (and what was rejected)
+- What was verified (with evidence)
+- How well it scored
+
+**This turns AI work into something a team can review, learn from, and trust.**
