@@ -1,0 +1,19 @@
+{
+  "name": "personal-harness",
+  "version": "1.0.0",
+  "description": "Crash-resilient, agent-agnostic project harness built on 12 harness engineering principles. The only AI dev tool that refuses to write code until it knows what done means — and builds a queryable knowledge graph of every decision.",
+  "author": "Mohammed Abdullah",
+  "repository": "abdullah7795/personal-harness",
+  "license": "MIT",
+  "skills": [
+    "skills/harness-proj-init",
+    "skills/harness-session",
+    "skills/harness-task",
+    "skills/harness-retro",
+    "skills/harness-export"
+  ],
+  "requirements": {
+    "obsidianVault": "~/Documents/Obsidian",
+    "plugins": ["superpowers"]
+  }
+}

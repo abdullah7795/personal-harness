@@ -1,0 +1,19 @@
+{
+  "name": "harness-task",
+  "version": "1.0.0",
+  "description": "Use whenever a task is given during an active harness session. Breaks into micro sub-tasks, writes breakdown to Obsidian first, dispatches each sub-task to an independent parallel agent, and updates session files after every step. Fully crash-resilient across Claude Code, Codex, and any agent tool.",
+  "entryPoint": "SKILL.md",
+  "triggers": [
+    "harness-task",
+    "run task",
+    "execute task",
+    "start task",
+    "dispatch task",
+    "break down task",
+    "parallel agents task"
+  ],
+  "requirements": {
+    "skills": ["superpowers:dispatching-parallel-agents"],
+    "activeSession": true
+  }
+}

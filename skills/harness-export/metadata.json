@@ -1,0 +1,14 @@
+{
+  "name": "harness-export",
+  "version": "1.0.0",
+  "description": "Use after a task is complete to generate a single PR-ready TASK-REPORT.md combining the Sprint Contract, decisions, verification proof, and evaluator scores. Turns AI work into shareable, auditable artifacts.",
+  "entryPoint": "SKILL.md",
+  "triggers": [
+    "harness-export",
+    "export task report",
+    "PR ready report",
+    "task report",
+    "audit trail",
+    "shareable AI session"
+  ]
+}

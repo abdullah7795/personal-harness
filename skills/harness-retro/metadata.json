@@ -1,0 +1,14 @@
+{
+  "name": "harness-retro",
+  "version": "1.0.0",
+  "description": "Use after multiple sessions to convert past session data into a smarter harness. Mines recurring failures, decisions, and patterns then proposes targeted updates to rules.md and clarifying questions.",
+  "entryPoint": "SKILL.md",
+  "triggers": [
+    "harness-retro",
+    "harness retrospective",
+    "session retrospective",
+    "improve harness",
+    "learn from sessions",
+    "harness feedback loop"
+  ]
+}
